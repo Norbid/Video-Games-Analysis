@@ -8,7 +8,7 @@ LIMIT 10;
 SELECT g.year, c.num_games, ROUND(c.avg_critic_score, 2) AS avg_critic_score
 FROM game_sales AS g
 INNER JOIN critics_avg_year_rating AS c
-ON g.year = c.year
+USING(year)
 GROUP BY g.year, c.num_games,c.avg_critic_score
 HAVING c.num_games >= 4
 ORDER BY avg_critic_score DESC
@@ -18,6 +18,6 @@ LIMIT 10;
 SELECT u.year, u.num_games, c.avg_critic_score, u.avg_user_score, (c.avg_critic_score - u.avg_user_score) AS diff
 FROM users_avg_year_rating AS u
 INNER JOIN critics_avg_year_rating AS c
-ON u.year = c.year
+USING(year)
 WHERE c.avg_critic_score > 9 OR u.avg_user_score > 9
 ORDER BY year;
